@@ -1,7 +1,12 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:posh_1_mall/webpages/flights_page.dart';
 import 'package:posh_1_mall/widgets/custom_textfield.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
+import '../provider/app_state.dart';
+import 'flightUpdate.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -37,15 +42,27 @@ class _HomePageState extends State<HomePage> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 100, 0),
                 child: Row(children: [
+                  Consumer<ApplicationState>(
+                  builder: (context, appSate, _) =>
                   TextButton(onPressed: (){
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => const SabPage()
-                    //     ),
-                    // );
-                  }, child: const Text("Flights")),
-                  TextButton(onPressed: (){}, child: const Text("Holiday Packages")),
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => FlightsPage(
+                          getFlightsInfo: appSate.getFlightsStream(),
+
+                        )
+                        ),
+                    );
+                  }, child: const Text("Flights")),),
+                  TextButton(onPressed: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const FlightUpdate()
+                      ),
+                    );
+                  }, child: const Text("Update Flights")),
                   TextButton(onPressed: (){}, child: const Text("Login")),
                   TextButton(onPressed: (){}, child: const Text("About Us")),
                 ],),
@@ -57,7 +74,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               Stack(
                 children: [
-                  Image.asset("images/ic1.jpg",width: width,),
+                  Image.asset("images/ic1.jpg",fit: BoxFit.fitWidth,),
                   Positioned(
                     top: 50,
                     left: 200,
@@ -334,12 +351,17 @@ class _HomePageState extends State<HomePage> {
                                                 ),)
 
                                               ),
-                                              onPressed: (){}, child: const Text("Search Flights"))),
+                                              onPressed: (){
+                                                // var dt1 = int.parse(DateTime.now().add(Duration(hours: 2)).toString());
+                                                // var dt2 = int.parse(DateTime.now().toString());
+                                                // var diff = dt1-dt2;
+                                                // print(dt1);
+                                                // print(dt2);
+                                                // print(diff);
+                                                print(DateTime.now().add(const Duration(hours: 3)).difference(DateTime.now()).inHours);
+                                              }, child: const Text("Search Flights"))),
                                     ],
                                   ),
-
-
-
                                 ],
                               ),
                             ),
